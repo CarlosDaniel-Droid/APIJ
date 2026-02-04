@@ -37,4 +37,4 @@ COPY ./docker/nginx.conf /etc/nginx/sites-available/default
 EXPOSE 80
 
 # Script para iniciar Nginx e PHP-FPM
-CMD service nginx start && php-fpm
+CMD php-fpm -D && nginx
