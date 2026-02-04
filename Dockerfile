@@ -36,5 +36,15 @@ COPY ./docker/nginx.conf /etc/nginx/sites-available/default
 # Expor a porta que o Render usa
 EXPOSE 80
 
+# Criar as pastas de cache e log se não existirem
+RUN mkdir -p /var/www/storage/framework/sessions \
+    /var/www/storage/framework/views \
+    /var/www/storage/framework/cache \
+    /var/www/bootstrap/cache
+
+# Dar permissão total para o usuário do servidor web
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+RUN chmod -R 775 /var/www/storage /var/www/bootstrap/cache
+
 # Script para iniciar Nginx e PHP-FPM
 CMD php-fpm -D && nginx -g "daemon off;"
